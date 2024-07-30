@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-      PATH = "$PATH:/opt/apache-maven-3.9.1/bin"
+      PATH = "$PATH:/opt/apache-maven-3.9.8/bin"
     }
     
     stages {
@@ -13,7 +13,7 @@ pipeline {
         }
         stage('CODE CHECKOUT') {
             steps {
-                git 'https://github.com/Mahesh8887/devops_real_time_project_1.git'
+                git 'https://github.com/kp820/Real_time_innowise_project.git'
             }
         }
         stage('MODIFIED IMAGE TAG') {
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 sh 'mvn sonar:sonar -Dsonar.projectName=$JOB_NAME \
                     -Dsonar.projectKey=$JOB_NAME \
-                    -Dsonar.host.url=http://3.1.24.180:9000 \
+                    -Dsonar.host.url=https://13.201.8.21:9000 \
                     -Dsonar.token=$sonar_token'
             }
         } 
@@ -49,14 +49,14 @@ pipeline {
         stage('PUSH IMAGE ON DOCKERHUB') {
             environment {
             dockerhub_user = credentials('DOCKERHUB_USER')            
-            dockerhub_pass = credentials('DOCKERHUB_PASS')
+        
             }    
             steps {
                 sh 'ansible-playbook playbooks/push_dockerhub.yml \
                     --extra-vars "JOB_NAME=$JOB_NAME" \
                     --extra-vars "BUILD_ID=$BUILD_ID" \
-                    --extra-vars "dockerhub_user=$dockerhub_user" \
-                    --extra-vars "dockerhub_pass=$dockerhub_pass"'              
+                    --extra-vars "dockerhub_user=$dockerhub_user"'
+                                 
             }
         }
         stage('DEPLOYMENT ON EKS') {
