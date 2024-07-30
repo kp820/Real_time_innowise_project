@@ -13,7 +13,7 @@ pipeline {
         }
         stage('CODE CHECKOUT') {
             steps {
-                git 'https://github.com/kp820/Real_time_innowise_project.git'
+                git branch:'main' , url:'https://github.com/kp820/Real_time_innowise_project.git'
             }
         }
         stage('MODIFIED IMAGE TAG') {
