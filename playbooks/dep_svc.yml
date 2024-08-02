@@ -21,9 +21,9 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: kamtakp/innowise_image:latest        
+        image: kamtakp/image-name:latest        
         ports:
-        - containerPort: 8080        
+        - containerPort: 8080     
         readinessProbe:
           httpGet:
             path: /webapp
