@@ -36,7 +36,7 @@ pipeline {
             sonar_token = credentials('SONAR_TOKEN')
             }
             steps {
-                sh 'mvn sonarqube:sonarqube -Dsonar.projectName=$JOB_NAME \
+                sh 'mvn sonar:sonar -Dsonar.projectName=$JOB_NAME \
                     -Dsonar.projectKey=$JOB_NAME \
                     -Dsonar.host.url=http://13.233.106.144:9000 \
                     -Dsonar.token=$sonar_token'
